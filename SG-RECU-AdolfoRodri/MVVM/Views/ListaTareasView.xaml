@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SG_RECU_AdolfoRodri.MVVM.Views.ListaTareasView"
+             Title="ListaTareasView"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="Blue">
+    
+    <Grid RowDefinitions="Auto,*">
+        <CollectionView ItemsSource="{Binding Tareas}" SelectionMode="Single" SelectedItem="{Binding TareaSeleccionada}">
+            <CollectionView.Header>
+                <Grid ColumnDefinitions="*,*,*,*,*,*" Padding="10">
+                    <Label Text="Titulo"/>
+                    <Label Text="Descripcion" Grid.Column="1"/>
+                    <Label Text="Estado" Grid.Column="2"/>
+                    <Label Text="Etiquetas" Grid.Column="3"/>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="0" Margin="5,0" BackgroundColor="{StaticResource ColorTarjeta}">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*">
+                            <Label Text="{Binding Titulo}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Descripcion}" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Estado, Converter={StaticResource convBool}}" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Etiquetas}" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Button Text="Marcar Completada" Grid.Column="4"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=MarcarCompletadaCommand}"/>
+                            <Button Text="Editar" Grid.Column="5"
+                        VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="20" WidthRequest="20"
+                        Clicked="Button_Clicked"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Grid.Row="1" Text="+" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="50" WidthRequest="100" Margin="0,10,0,10"
+    Clicked="Button_Clicked"/>
+    </Grid>
+</ContentPage>

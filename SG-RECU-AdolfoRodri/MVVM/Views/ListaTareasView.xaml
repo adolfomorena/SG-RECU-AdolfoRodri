@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.ListaTareasView"
              Title="ListaTareasView"
-             NavigationPage.HasNavigationBar="False"
-             BackgroundColor="Blue">
+             NavigationPage.HasNavigationBar="False">
     
     <Grid RowDefinitions="Auto,*">
         <CollectionView ItemsSource="{Binding Tareas}" SelectionMode="Single" SelectedItem="{Binding TareaSeleccionada}">
@@ -18,8 +17,8 @@
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="0" Margin="5,0" BackgroundColor="{StaticResource ColorTarjeta}">
-                        <Grid ColumnDefinitions="*,*,*,*,*,*">
+                    <Frame Padding="0" Margin="5,0" BackgroundColor="Blue">
+                        <!--<Grid ColumnDefinitions="*,*,*,*,*,*">
                             <Label Text="{Binding Titulo}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label Text="{Binding Descripcion}" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label Text="{Binding Estado, Converter={StaticResource convBool}}" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -29,7 +28,7 @@
                             <Button Text="Editar" Grid.Column="5"
                         VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="20" WidthRequest="20"
                         Clicked="Button_Clicked"/>
-                        </Grid>
+                        </Grid>-->
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

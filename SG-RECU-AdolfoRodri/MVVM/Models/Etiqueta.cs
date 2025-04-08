@@ -11,15 +11,14 @@ using System.Threading.Tasks;
 
 namespace SG_RECU_AdolfoRodri.MVVM.Models
 {
-    
+    [AddINotifyPropertyChangedInterface]
     [Table("Etiquetas")]
     public class Etiqueta : TableData
     {
         [Unique]
         public string Nombre { get; set; } = string.Empty;
 
-
-        //[ManyToMany(typeof(Etiqueta), CascadeOperations = CascadeOperation.All)]
-        public ObservableCollection<Tarea> tareas { get; set; } = new ObservableCollection<Tarea> { };
+        [ManyToMany(typeof(TareaEtiqueta))]
+        public int TareaId { get; set; }
     }
 }

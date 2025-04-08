@@ -1,5 +1,5 @@
 ﻿using PropertyChanged;
-using SGTAREASAdolfo.Abstractions;
+using SG_RECU_AdolfoRodri.Abstractions;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;

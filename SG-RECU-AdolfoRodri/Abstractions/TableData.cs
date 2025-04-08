@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGTAREASAdolfo.Abstractions
+namespace SG_RECU_AdolfoRodri.Abstractions
 {
     public class TableData
     {

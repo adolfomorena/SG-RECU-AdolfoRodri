@@ -1,5 +1,6 @@
-﻿using SQLite;
-using SQLiteEjemplo.Abstractions;
+﻿using SG_RECU_AdolfoRodri.Abstractions;
+using SGTAREASAdolfo;
+using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,14 @@ using System.Threading.Tasks;
 
 namespace SQLiteEjemplo.Repositories
 {
-    public class BaseRepository<T> :
-IBaseRepository<T> where T : TableData, new()
+    public class BaseRepository<T>: IbaseRepository<T> where T : TableData, new()
     {
         SQLiteConnection connection;
         public string StatusMessage { get; set; }
         public BaseRepository()
         {
             connection =
-            new SQLiteConnection(Constantes.DatabasePath,
-            Constantes.Flags);
+            new SQLiteConnection(Constantes.DatabasePath, Constantes.Flags);
             connection.CreateTable<T>();
         }
         public void DeleteItem(T item)

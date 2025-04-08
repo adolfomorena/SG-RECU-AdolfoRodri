@@ -21,7 +21,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.Models
         public bool Estado { get; set; } = false;
         public string Prioridad { get; set; } = string.Empty;
 
-        //[ManyToMany(CascadeOperations = CascadeOperation.All)]
+        [ManyToMany(typeof(TareaEtiqueta), CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<Etiqueta> Etiquetas { get; set; } = new ObservableCollection<Etiqueta>();
     }
 }

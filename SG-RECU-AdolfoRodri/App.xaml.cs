@@ -8,12 +8,16 @@ namespace SG_RECU_AdolfoRodri
     {
         public static BaseRepository<Tarea> TareaRepo { get; private set; }
         public static BaseRepository<Etiqueta> EtiquetaRepo { get; private set; }
-        public App(BaseRepository<Tarea> objTareaRepo, BaseRepository<Etiqueta> objEtiquetaRepo)
+
+        public static BaseRepository<TareaEtiqueta> TareaEtiquetaRepo { get; private set; }
+        public App(BaseRepository<Tarea> objTareaRepo, BaseRepository<Etiqueta> objEtiquetaRepo,
+            BaseRepository<TareaEtiqueta> objTareaEtiquetaRepo)
         {
+            InitializeComponent();
             TareaRepo = objTareaRepo;
             EtiquetaRepo = objEtiquetaRepo;
-            InitializeComponent();
-
+            TareaEtiquetaRepo = objTareaEtiquetaRepo;
+            
             MainPage = new NavigationPage(new ListaTareasView());
         }
     }

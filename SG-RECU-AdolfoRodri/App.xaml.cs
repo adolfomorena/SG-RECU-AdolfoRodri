@@ -10,8 +10,8 @@ namespace SG_RECU_AdolfoRodri
         public static BaseRepository<Etiqueta> EtiquetaRepo { get; private set; }
         public App(BaseRepository<Tarea> objTareaRepo, BaseRepository<Etiqueta> objEtiquetaRepo)
         {
-            //TareaRepo = objTareaRepo;
-            //EtiquetaRepo = objEtiquetaRepo;
+            TareaRepo = objTareaRepo;
+            EtiquetaRepo = objEtiquetaRepo;
             InitializeComponent();
 
             MainPage = new NavigationPage(new ListaTareasView());

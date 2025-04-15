@@ -16,7 +16,7 @@
         <VerticalStackLayout>
             <CollectionView Grid.Row="1" ItemsSource="{Binding ListaEtiquetas}"
                   SelectionMode="Single"
-                  SelectedItem="{Binding Etiqueta}">
+                  SelectedItem="{Binding EtiquetaSeleccionada}">
 
                 <CollectionView.EmptyView>
                     <Grid>

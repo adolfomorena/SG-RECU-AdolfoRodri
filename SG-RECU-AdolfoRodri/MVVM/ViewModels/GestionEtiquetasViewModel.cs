@@ -15,6 +15,8 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
     {
         public ObservableCollection<Etiqueta> ListaEtiquetas { get; set; } = new ObservableCollection<Etiqueta>();
 
+        public ObservableCollection<TareaEtiqueta> ListaTareaEtiqueta { get; set; } = new ObservableCollection<TareaEtiqueta>();
+
         public Etiqueta EtiquetaSeleccionada { get; set; } = new Etiqueta();
 
         private Command _guardarEtiqueta;
@@ -30,7 +32,9 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         public GestionEtiquetasViewModel(){
 
+            ListaTareaEtiqueta.Clear();
             ListaEtiquetas.Clear();
+            GetTareasEtiquetas();
             GetEtiquetas();
 
             _guardarEtiqueta = new Command(execute: () =>
@@ -58,28 +62,52 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 ListaEtiquetas.Add(etiqueta);
             }
         }
+        public void GetTareasEtiquetas()
+        {
+            ListaTareaEtiqueta.Clear();
+            var tareasEtiquetas = App.TareaEtiquetaRepo.GetItems();
+            foreach (var tareaEtiqueta in tareasEtiquetas)
+            {
+                ListaTareaEtiqueta.Add(tareaEtiqueta);
+            }
+        }
         async public void GuardarEtiqueta()
         {
             EtiquetaSeleccionada.Nombre = Nombre;
             App.EtiquetaRepo.SaveItem(EtiquetaSeleccionada);
             await Application.Current.MainPage.DisplayAlert("Creada", "Etiqueta creada correctamente", "Ok");
             Nombre = string.Empty;
+            EtiquetaSeleccionada = new Etiqueta();
             GetEtiquetas();
         }
 
         async public void EliminarEtiqueta()
         {
-           
-            //Opcion para ver si tiene tareas y borrar la relacion
+          
+            var tareas= from ta in ListaTareaEtiqueta
+                        where ta.EtiquetaId == EtiquetaSeleccionada.Id
+                        select ta;
+
+            if (tareas.Any())
+            {
+                foreach (var tarea in tareas)
+                {
+                    App.TareaEtiquetaRepo.DeleteItem(tarea);
+                }
+                GetTareasEtiquetas();
+            }   
 
             App.EtiquetaRepo.DeleteItem(EtiquetaSeleccionada);
             await Application.Current.MainPage.DisplayAlert("Eliminada", "Etiqueta eliminada correctamente", "Ok");
             EtiquetaSeleccionada = new Etiqueta();
             GetEtiquetas();
+            
+
         }
         public void NotificarCambio()
         {
-            _guardarEtiqueta.ChangeCanExecute();
+            _guardarEtiqueta.ChangeCanExecute();  
+            _eliminarEtiqueta.ChangeCanExecute();
         }
 
     }

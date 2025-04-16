@@ -1,5 +1,6 @@
 ﻿using PropertyChanged;
 using SG_RECU_AdolfoRodri.MVVM.Models;
+using SG_RECU_AdolfoRodri.MVVM.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,12 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public ICommand GuardarEtiquetaCommand => _guardarEtiqueta;
 
         public ICommand EliminarEtiquetaCommand => _eliminarEtiqueta;
+
+
+        public ICommand VolverCommand => new Command(() =>
+        {
+            Volver();
+        }); 
 
 
 
@@ -61,6 +68,11 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             {
                 ListaEtiquetas.Add(etiqueta);
             }
+        }
+        void Volver()
+        {
+            App.Current.MainPage.Navigation.PushAsync(new ListaTareasView());
+
         }
         public void GetTareasEtiquetas()
         {

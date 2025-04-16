@@ -10,15 +10,17 @@ namespace SG_RECU_AdolfoRodri
         public static BaseRepository<Etiqueta> EtiquetaRepo { get; private set; }
 
         public static BaseRepository<TareaEtiqueta> TareaEtiquetaRepo { get; private set; }
-        public App(BaseRepository<Tarea> objTareaRepo, BaseRepository<Etiqueta> objEtiquetaRepo,
-            BaseRepository<TareaEtiqueta> objTareaEtiquetaRepo)
+        public App(BaseRepository<Tarea> objTareaRepo, BaseRepository<Etiqueta> objEtiquetaRepo, BaseRepository<TareaEtiqueta> objTareaEtiquetaRepo)
         {
-            InitializeComponent();
+
+
             TareaRepo = objTareaRepo;
             EtiquetaRepo = objEtiquetaRepo;
             TareaEtiquetaRepo = objTareaEtiquetaRepo;
-            
-            MainPage = new NavigationPage(new ListaTareasView());
+
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new GestionEtiquetasView());
         }
     }
 }

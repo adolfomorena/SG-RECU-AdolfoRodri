@@ -20,7 +20,7 @@ namespace SG_RECU_AdolfoRodri
 
             InitializeComponent();
 
-            MainPage = new NavigationPage(new GestionEtiquetasView());
+            MainPage = new NavigationPage(new GestionTareasView());
         }
     }
 }

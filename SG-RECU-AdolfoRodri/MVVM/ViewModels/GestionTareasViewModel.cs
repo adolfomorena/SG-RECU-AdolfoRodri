@@ -52,6 +52,19 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private Command _guardarTarea;
 
+        public ICommand GuardarTareaCommand => _guardarTarea;
+        public GestionTareasViewModel()
+        {
+            GetEtiquetas();
+            GetTareas();
+            _guardarTarea = new Command(execute: () =>
+            {
+                GuardarTarea();
+            }, canExecute: () =>
+            {
+                return !string.IsNullOrWhiteSpace(NomTarea) && !string.IsNullOrWhiteSpace(prio);
+            });
+        }
 
         async public void GuardarTarea()
         {
@@ -123,7 +136,13 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 Tareas.Add(tarea);
             }
         }
+        public void NotificarCanExecute()
+        {
 
+            _guardarTarea.ChangeCanExecute();
+
+
+        }
 
     }
     }

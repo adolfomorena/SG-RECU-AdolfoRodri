@@ -2,11 +2,53 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.GestionTareasView"
+             xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
              Title="GestionTareasView">
+    <ContentPage.Resources>
+        <conv:BoolToStringConverter
+  x:Key="conversorSwitch" />
+    </ContentPage.Resources>
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Button Text="Volver" Command="{Binding VolverCommand}"/>
+        <Entry Placeholder="Titulo" Text="{Binding NomTarea}" TextChanged="Entry_TextChanged"/>
+        <Editor Placeholder="Descripcion" Text="{Binding descripcion}"/>
+
+        <HorizontalStackLayout>
+            <Label Text="Estado"/>
+            <Switch IsToggled="{Binding Estado}"/>
+            <Label Text="{Binding Estado, Converter={StaticResource conversorSwitch}}"/>
+        </HorizontalStackLayout>
+
+        <Label Text="Prioridad"/>
+        <Picker ItemsSource="{Binding Prioridades}" SelectedItem="{Binding prio}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+        <Button Text="Guardar" Command="{Binding GuardarTareaCommand}"/>
+        <Button Text="Gestionar Etiquetas" Command="{Binding NavegarEtiquetasCommand}"/>
+
+        <ScrollView>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding ItemsEtiqueta}"
+         SelectionMode="Single"
+         SelectedItem="{Binding Etiqueta}">
+
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <VerticalStackLayout>
+                            <Label HorizontalTextAlignment="Center" Text="No hay etiquetas" FontSize="Large" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </CollectionView.EmptyView>
+
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+
+                            <Label Text="{Binding Etiqueta.Nombre}" />
+                            <CheckBox IsChecked="{Binding Seleccionado}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>

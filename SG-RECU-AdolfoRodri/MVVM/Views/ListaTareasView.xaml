@@ -21,12 +21,12 @@
                                 BackgroundColor="Pink" FontSize="12"
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center">
                         </Button>
-                        <StackLayout Grid.Column="1" Padding="10" Spacing="2">
+                        <HorizontalStackLayout Grid.Column="1" Padding="10" Spacing="2">
                             <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold"/>
                             <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13"/>
                             <Label Text="{Binding Estado, Converter={StaticResource EstadoConverter}}" FontSize="13"/>
                             <Label Text="{Binding Etiquetas, Converter={StaticResource EtiquetasConverter}}" FontSize="12"/>
-                        </StackLayout>
+                        </HorizontalStackLayout>
                         <Button Grid.Column="2"
                                 Text="EDITAR" TextColor="White"
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"

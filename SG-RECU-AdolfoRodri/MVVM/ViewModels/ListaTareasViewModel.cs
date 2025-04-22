@@ -15,8 +15,8 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
 
         public ICommand CambiarEstadoCommand { get; private set; }
-        public ICommand EditarTareaCommand { get; private set; }
-        public ICommand CrearTareaCommand { get; private set; }
+        //public ICommand EditarTareaCommand { get; private set; }
+        //public ICommand CrearTareaCommand { get; private set; }
 
         public ListaTareasViewModel()
         {

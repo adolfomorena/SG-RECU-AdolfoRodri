@@ -8,7 +8,7 @@
         <Button Text="Volver" Command="{Binding VolverCommand}"/>
 
 
-        <Entry Placeholder="Etiqueta" Text="{Binding Nombre}" TextChanged="Entry_TextChangued"/>
+        <Entry Placeholder="Etiqueta" Text="{Binding EtiquetaSeleccionada.Nombre}" TextChanged="Entry_TextChangued"/>
         <Button Text="Guardar" Command="{Binding GuardarEtiquetaCommand}"/>
         <Button Text="Eliminar" Command="{Binding EliminarEtiquetaCommand}"/>
 

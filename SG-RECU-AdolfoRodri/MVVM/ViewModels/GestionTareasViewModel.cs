@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,6 +16,8 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class GestionTareasViewModel
     {
+
+        public Tarea TareaSeleccionada { get; set; } = new Tarea();
         public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
         public List<Etiqueta> Etiquetas { get; set; } = new List<Etiqueta>();
 
@@ -37,17 +40,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public string Prioridad { get; set; }
 
 
-        private string _nomTarea = string.Empty;
 
-
-        public string desc { get; set; } = string.Empty;
-
-        public bool Estado { get; set; } = false;
-
-        public string prio { get; set; } = string.Empty;
-
-
-        public string NomTarea { get; set; } = string.Empty;
 
 
         private Command _guardarTarea;
@@ -62,29 +55,28 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 GuardarTarea();
             }, canExecute: () =>
             {
-                return !string.IsNullOrWhiteSpace(NomTarea) && !string.IsNullOrWhiteSpace(prio);
+                return TareaSeleccionada.Titulo != string.Empty && TareaSeleccionada.Prioridad != string.Empty;
             });
         }
 
         async public void GuardarTarea()
         {
-            Tarea existe = App.TareaRepo.GetItem(tarea => tarea.Titulo == NomTarea);
+            Tarea existe = App.TareaRepo.GetItem(t => t.Id == TareaSeleccionada.Id);
 
-            Tarea nuevaTarea = new Tarea
-            {
-                Titulo = NomTarea,
-                Descripcion = desc,
-                Prioridad = prio,
-                Estado = Estado
-            };
 
 
             if (existe == null)
             {
-               
+                Tarea nuevaTarea = new Tarea
+                {
+                    Titulo = TareaSeleccionada.Titulo,
+                    Prioridad = TareaSeleccionada.Prioridad,
+                    Etiquetas = new ObservableCollection<Etiqueta>()
+                };
                 foreach (var item in ItemsEtiqueta.Where(x => x.Seleccionado))
                 {
-                    nuevaTarea.Etiquetas.Add(item.Etiqueta);
+                    Etiqueta etiquetaExistente = App.EtiquetaRepo.GetItem(e => e.Nombre == item.Etiqueta.Nombre);
+                    nuevaTarea.Etiquetas.Add(etiquetaExistente);
                 }
                 App.TareaRepo.SaveItemCascada(nuevaTarea);
 
@@ -92,8 +84,20 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "La tarea ya existe", "Ok");
+                existe.Prioridad = TareaSeleccionada.Prioridad;
+                existe.Etiquetas = new ObservableCollection<Etiqueta>();
+                foreach (var item in ItemsEtiqueta.Where(x => x.Seleccionado))
+                {
+                    Etiqueta etiquetaExistente = App.EtiquetaRepo.GetItem(e => e.Nombre == item.Etiqueta.Nombre);
+                    existe.Etiquetas.Add(etiquetaExistente);
+                }
+
+                App.TareaRepo.SaveItemCascada(existe);
+                await Application.Current.MainPage.DisplayAlert("Actualizada", "Tarea actualizada correctamente", "OK");
+
             }
+            TareaSeleccionada = new Tarea();
+            foreach (var item in ItemsEtiqueta) item.Seleccionado = false;
         }
              public void NavegarEtiquetas()
         {
@@ -127,12 +131,8 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         }
         public void NotificarCanExecute()
         {
-
             _guardarTarea.ChangeCanExecute();
-
-
         }
-
-    }
+        }
     }
 

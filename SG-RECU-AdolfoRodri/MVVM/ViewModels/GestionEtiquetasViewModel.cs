@@ -24,7 +24,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private Command _eliminarEtiqueta;
 
-        public string Nombre { get; set; } = string.Empty;
+       
         public ICommand GuardarEtiquetaCommand => _guardarEtiqueta;
 
         public ICommand EliminarEtiquetaCommand => _eliminarEtiqueta;
@@ -49,7 +49,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 GuardarEtiqueta();
             }, canExecute: () =>
             {
-                return Nombre.Length > 0;
+                return EtiquetaSeleccionada.Nombre.Length > 0;
             });
 
             _eliminarEtiqueta = new Command(execute: () =>
@@ -85,10 +85,9 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         }
         async public void GuardarEtiqueta()
         {
-            EtiquetaSeleccionada.Nombre = Nombre;
             App.EtiquetaRepo.SaveItem(EtiquetaSeleccionada);
             await Application.Current.MainPage.DisplayAlert("Creada", "Etiqueta creada correctamente", "Ok");
-            Nombre = string.Empty;
+           
             EtiquetaSeleccionada = new Etiqueta();
             GetEtiquetas();
         }
@@ -102,11 +101,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
             if (tareas.Any())
             {
-                foreach (var tarea in tareas)
-                {
-                    App.TareaEtiquetaRepo.DeleteItem(tarea);
-                }
-                GetTareasEtiquetas();
+                App.EtiquetaRepo.DeleteItem(EtiquetaSeleccionada);
             }   
 
             App.EtiquetaRepo.DeleteItem(EtiquetaSeleccionada);

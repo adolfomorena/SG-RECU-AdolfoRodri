@@ -73,6 +73,9 @@
 	  <MauiXaml Update="MVVM\Views\GestionEtiquetasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\GestionTareasView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\ListaTareasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

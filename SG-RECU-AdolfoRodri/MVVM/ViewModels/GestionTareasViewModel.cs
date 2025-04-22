@@ -15,6 +15,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class GestionTareasViewModel
     {
+        public Tarea TareaSeleccionada { get; set; } = new Tarea();
         public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
         public List<Etiqueta> Etiquetas { get; set; } = new List<Etiqueta>();
 

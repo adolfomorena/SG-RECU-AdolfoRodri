@@ -78,26 +78,15 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 Estado = Estado
             };
 
-            List<Etiqueta> etiquetasList = new List<Etiqueta>();
-
-
 
             if (existe == null)
             {
-                App.TareaRepo.SaveItem(nuevaTarea);
-
+               
                 foreach (var item in ItemsEtiqueta.Where(x => x.Seleccionado))
                 {
-                    TareaEtiqueta nuevaEtiqueta = new TareaEtiqueta
-                    {
-                        TareaId = nuevaTarea.Id,
-                        EtiquetaId = item.Etiqueta.Id
-                    };
-
-                    App.TareaEtiquetaRepo.SaveItem(nuevaEtiqueta);
                     nuevaTarea.Etiquetas.Add(item.Etiqueta);
-
                 }
+                App.TareaRepo.SaveItemCascada(nuevaTarea);
 
                 await Application.Current.MainPage.DisplayAlert("Guardado", "Tarjeta guardada", "OK");
             }

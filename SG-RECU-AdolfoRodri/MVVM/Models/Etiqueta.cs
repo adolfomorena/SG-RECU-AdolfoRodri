@@ -18,7 +18,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.Models
         [Unique]
         public string Nombre { get; set; } = string.Empty;
 
-        [ManyToMany(typeof(TareaEtiqueta))]
-        public int TareaId { get; set; }
+        [ManyToMany(typeof(TareaEtiqueta), CascadeOperations = CascadeOperation.All)]
+        public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
     }
 }

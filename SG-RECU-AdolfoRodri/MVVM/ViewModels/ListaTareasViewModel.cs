@@ -1,4 +1,5 @@
 ﻿using SG_RECU_AdolfoRodri.MVVM.Models;
+using SG_RECU_AdolfoRodri.MVVM.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,44 +15,29 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public Tarea TareaSeleccionada { get; set; } = new Tarea();
         public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
 
-        public ICommand CambiarEstadoCommand { get; private set; }
-        //public ICommand EditarTareaCommand { get; private set; }
-        //public ICommand CrearTareaCommand { get; private set; }
+       
 
         public ListaTareasViewModel()
         {
-            CambiarEstadoCommand = new Command<Tarea>(CambiarEstado);
             RefreshView();
+           
         }
-
-        private void CambiarEstado(Tarea tarea)
+        public ICommand EditarTareaCommand => new Command(() =>
         {
-            if (tarea != null && !tarea.Estado)
-            {
-                tarea.Estado = true;
-                App.TareaRepo.SaveItem(tarea);
-                RefreshView();
-            }
-        }
-
-        //private void EditarTarea(Tarea tarea)
-        //{
-        //    if (tarea != null)
-        //    {
-        //        App.TareaRepo.SaveItem(tarea);
-        //        RefreshView();
-        //    }
-        //}
-
-        //private void CrearTarea(Tarea tarea)
-        //{
-        //    if (tarea != null)
-        //    {
-        //        App.TareaRepo.SaveItem(tarea);
-        //        RefreshView();
-        //    }
-        //}
-
+            App.Current.MainPage.Navigation.PushAsync(
+                new GestionTareasView
+                {
+                    BindingContext = new GestionTareasViewModel
+                    {
+                        TareaSeleccionada = TareaSeleccionada
+                    }
+                }
+            );
+        });
+        public ICommand AgregarTareaCommand => new Command(() =>
+        {
+            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView());
+        });
         private void RefreshView()
         {
             Tareas = new ObservableCollection<Tarea>(App.TareaRepo.GetItemsCascada());

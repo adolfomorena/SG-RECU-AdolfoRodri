@@ -138,7 +138,7 @@ namespace SQLiteEjemplo.Repositories
         public void SaveItemCascada(T item, bool isCascada = true)
         {
             //De momento solo insertar
-            connection.InsertWithChildren(item, isCascada);
+            connection.InsertOrReplaceWithChildren(item, isCascada);
         }
     }
 }

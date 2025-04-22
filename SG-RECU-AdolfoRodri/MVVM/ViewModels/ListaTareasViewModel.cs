@@ -39,10 +39,14 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private void EditarTarea()
         {
-            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+            if (TareaSeleccionada != null)
             {
-                BindingContext = new GestionTareasViewModel()
-            });
+                App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+                {
+                    BindingContext = new GestionTareasViewModel(TareaSeleccionada)
+                });
+            }
+            
         }
 
         private void CrearTarea()

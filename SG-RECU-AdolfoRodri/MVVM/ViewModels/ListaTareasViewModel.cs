@@ -38,9 +38,23 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         {
             App.Current.MainPage.Navigation.PushAsync(new GestionTareasView());
         });
-        private void RefreshView()
+        public ICommand RefrescarCommand => new Command(() =>
+        {
+            RefreshView();
+        });
+
+        public ICommand BorrarTareaCommand => new Command(() =>
+        {
+            BorrarTarea();
+        });
+        public void RefreshView()
         {
             Tareas = new ObservableCollection<Tarea>(App.TareaRepo.GetItemsCascada());
+        }
+        async public void BorrarTarea()
+        {
+            App.TareaRepo.DeleteItem(TareaSeleccionada);
+            await Application.Current.MainPage.DisplayAlert("Eliminada", "Tarea eliminada correctamente", "Ok");
         }
     }
 }

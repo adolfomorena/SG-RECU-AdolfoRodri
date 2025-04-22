@@ -129,7 +129,6 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         {
             _guardarTarea.ChangeCanExecute();
         }
-
         }
     }
 

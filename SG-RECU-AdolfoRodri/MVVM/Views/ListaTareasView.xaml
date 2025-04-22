@@ -51,13 +51,8 @@
                                 Text="EDITAR" TextColor="White"
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                                 BackgroundColor="Pink"
-                                Command="{Binding EditarTareaCommand}" />
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarTareaCommand}" />
 
-                        <Button Grid.Column="3"
-                                Text="BORRAR" TextColor="White"
-                                WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
-                                BackgroundColor="Red"
-                                Command="{Binding BorrarTareaCommand}" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -73,6 +68,6 @@
             BackgroundColor="DarkOrange" TextColor="White"
             HorizontalOptions="Start" VerticalOptions="End"
             Margin="20"
-            Command="{Binding RefreshView}"/>
+            Command="{Binding RefreshCommand}"/>
     </Grid>
 </ContentPage>

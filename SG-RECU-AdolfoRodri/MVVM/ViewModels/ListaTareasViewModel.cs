@@ -1,4 +1,5 @@
 ﻿using SG_RECU_AdolfoRodri.MVVM.Models;
+using SG_RECU_AdolfoRodri.MVVM.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,12 +16,14 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
 
         public ICommand CambiarEstadoCommand { get; private set; }
-        //public ICommand EditarTareaCommand { get; private set; }
-        //public ICommand CrearTareaCommand { get; private set; }
+        public ICommand EditarTareaCommand { get; private set; }
+        public ICommand CrearTareaCommand { get; private set; }
 
         public ListaTareasViewModel()
         {
             CambiarEstadoCommand = new Command<Tarea>(CambiarEstado);
+            EditarTareaCommand = new Command(EditarTarea);
+            CrearTareaCommand = new Command(CrearTarea);
             RefreshView();
         }
 
@@ -34,23 +37,25 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             }
         }
 
-        //private void EditarTarea(Tarea tarea)
-        //{
-        //    if (tarea != null)
-        //    {
-        //        App.TareaRepo.SaveItem(tarea);
-        //        RefreshView();
-        //    }
-        //}
+        private void EditarTarea()
+        {
+            if (TareaSeleccionada != null)
+            {
+                App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+                {
+                    BindingContext = new GestionTareasViewModel(TareaSeleccionada)
+                });
+            }
+            
+        }
 
-        //private void CrearTarea(Tarea tarea)
-        //{
-        //    if (tarea != null)
-        //    {
-        //        App.TareaRepo.SaveItem(tarea);
-        //        RefreshView();
-        //    }
-        //}
+        private void CrearTarea()
+        {
+            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+            {
+                BindingContext = new GestionTareasViewModel()
+            });
+        }
 
         private void RefreshView()
         {

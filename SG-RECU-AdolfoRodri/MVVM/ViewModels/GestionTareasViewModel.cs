@@ -61,9 +61,9 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         async public void GuardarTarea()
         {
-            Tarea existe = App.TareaRepo.GetItem(t =>t.Titulo== TareaSeleccionada.Titulo);
+            Tarea existe = App.TareaRepo.GetItem(t => t.Id == TareaSeleccionada.Id);
 
-           
+
 
             if (existe == null)
             {
@@ -81,18 +81,22 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 App.TareaRepo.SaveItemCascada(nuevaTarea);
 
                 await Application.Current.MainPage.DisplayAlert("Guardado", "Tarjeta guardada", "OK");
-
-                
-              
-
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "La tarea ya existe", "Ok");
-            }
+                existe.Prioridad = TareaSeleccionada.Prioridad;
+                existe.Etiquetas = new ObservableCollection<Etiqueta>();
+                foreach (var item in ItemsEtiqueta.Where(x => x.Seleccionado))
+                {
+                    Etiqueta etiquetaExistente = App.EtiquetaRepo.GetItem(e => e.Nombre == item.Etiqueta.Nombre);
+                    existe.Etiquetas.Add(etiquetaExistente);
+                }
 
-            
-                TareaSeleccionada = new Tarea();
+                App.TareaRepo.SaveItemCascada(existe);
+                await Application.Current.MainPage.DisplayAlert("Actualizada", "Tarea actualizada correctamente", "OK");
+
+            }
+            TareaSeleccionada = new Tarea();
             foreach (var item in ItemsEtiqueta) item.Seleccionado = false;
         }
              public void NavegarEtiquetas()

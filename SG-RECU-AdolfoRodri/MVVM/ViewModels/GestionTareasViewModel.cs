@@ -58,6 +58,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 return TareaSeleccionada.Titulo != string.Empty && TareaSeleccionada.Prioridad != string.Empty;
             });
         }
+        
 
         async public void GuardarTarea()
         {

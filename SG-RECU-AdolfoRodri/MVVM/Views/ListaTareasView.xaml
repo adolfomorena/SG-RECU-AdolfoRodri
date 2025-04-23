@@ -17,21 +17,21 @@
                         SelectedItem="{Binding TareaSeleccionada}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto" BackgroundColor="BlueViolet" Margin="0,5">
+                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto" BackgroundColor="#303030" Margin="0,5">
                         <Button Text="✅"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:ListaTareasViewModel}}, Path=CambiarEstadoCommand}"
-                                BackgroundColor="Pink" FontSize="12"
+                                BackgroundColor="DarkOliveGreen" FontSize="12"
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"/>
 
-                        <HorizontalStackLayout Grid.Column="1" Padding="10" Spacing="2">
-                            <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold"/>
-                            <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13"/>
-                            <Label Text="{Binding Estado, Converter={StaticResource EstadoConverter}}" FontSize="13"/>
+                        <HorizontalStackLayout Grid.Column="1" Padding="10" Spacing="20">
+                            <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold" TextColor="White"/>
+                            <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13" TextColor="White"/>
+                            <Label Text="{Binding Estado, Converter={StaticResource EstadoConverter}}" FontSize="13" TextColor="White"/>
                             <CollectionView ItemsSource="{Binding Etiquetas}" ItemsLayout="Horizontal" Grid.Column="4"  Margin="0,5,0,0">
                                 <CollectionView.EmptyView>
                                     <Grid>
                                         <VerticalStackLayout>
-                                            <Label HorizontalTextAlignment="Center" Text="No hay etiquetas" FontSize="Large" FontAttributes="Bold"/>
+                                            <Label HorizontalTextAlignment="Center" Text="No hay etiquetas" TextColor="White" FontAttributes="Bold"/>
                                         </VerticalStackLayout>
                                     </Grid>
                                 </CollectionView.EmptyView>
@@ -39,7 +39,7 @@
                                     <DataTemplate>
 
                                         <HorizontalStackLayout>
-                                            <Label Text="{Binding Nombre}"/>
+                                            <Label Text="{Binding Nombre}" TextColor="White"/>
                                             <Label Text=", "/>
                                         </HorizontalStackLayout>    
                                     </DataTemplate>
@@ -51,7 +51,15 @@
                                 Text="EDITAR" TextColor="White"
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                                 BackgroundColor="Pink"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarTareaCommand}" />
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EditarTareaCommand}"
+                                CommandParameter="{Binding .}"
+                                />
+                        <Button Grid.Column="3"
+                        Text="Borrar" TextColor="White"
+                        WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
+                        BackgroundColor="Red"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BorrarTareaCommand}"
+                        CommandParameter="{Binding .}"/>
 
                     </Grid>
                 </DataTemplate>

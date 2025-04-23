@@ -49,8 +49,8 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <HorizontalStackLayout Padding="5">
-                                <!--<CheckBox IsChecked="{Binding EtiquetaSelecionada}"/>-->
+                            <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+                                <CheckBox IsChecked="{Binding EtiquetaSelecionada}"/>
                                 <Label Text="{Binding Nombre}" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </DataTemplate>

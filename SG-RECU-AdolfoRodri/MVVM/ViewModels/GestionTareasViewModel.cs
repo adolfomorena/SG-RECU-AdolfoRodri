@@ -14,6 +14,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
     public class GestionTareasViewModel
     {
         public Tarea TareaSeleccionada { get; set; }
+        public List<Etiqueta> Etiquetas { get; set; } = new List<Etiqueta>();
         public ObservableCollection<Etiqueta> EtiquetasDisponibles { get; set; } = new ObservableCollection<Etiqueta>();
 
         public ICommand VolverCommand { get; private set; }
@@ -22,19 +23,19 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         public GestionTareasViewModel(Tarea tarea)
         {
+            RefreshView();
             TareaSeleccionada = tarea;
             VolverCommand = new Command(Volver);
             GuardarCommand = new Command(Guardar);
             GestionEtiquetasCommand = new Command(GestionEtiquetas);
-            RefreshView();
         }
         public GestionTareasViewModel()
         {
+            RefreshView();
             TareaSeleccionada = new Tarea();
             VolverCommand = new Command(Volver);
             GuardarCommand = new Command(Guardar);
             GestionEtiquetasCommand = new Command(GestionEtiquetas);
-            RefreshView();
         }
 
         private void Volver()

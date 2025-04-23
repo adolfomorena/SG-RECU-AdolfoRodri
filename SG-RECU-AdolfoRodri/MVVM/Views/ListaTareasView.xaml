@@ -52,14 +52,14 @@
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                                 BackgroundColor="Pink"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EditarTareaCommand}"
-                                CommandParameter="{Binding .}"
+                         
                                 />
                         <Button Grid.Column="3"
                         Text="Borrar" TextColor="White"
                         WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                         BackgroundColor="Red"
                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BorrarTareaCommand}"
-                        CommandParameter="{Binding .}"/>
+                        />
 
                     </Grid>
                 </DataTemplate>

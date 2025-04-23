@@ -43,13 +43,13 @@
         <Label Text="Lista de etiquetas"
                FontSize="Large"
                FontAttributes="Bold"
-               TextColor="#333"
+               TextColor="White"
                Margin="0,10,0,0" />
 
         <CollectionView ItemsSource="{Binding ListaEtiquetas}"
                         SelectionMode="Single"
                         SelectedItem="{Binding EtiquetaSeleccionada}"
-                        BackgroundColor="White"
+                        BackgroundColor="#505050"
                         Margin="0"
                         HeightRequest="300">
 
@@ -66,12 +66,12 @@
                 <DataTemplate>
                     <Frame Padding="10"
                            Margin="5"
-                           CornerRadius="10"
-                           BackgroundColor="#E8EAF6"
+                           CornerRadius="20"
+                           BackgroundColor="#2F3A2B"
                            HasShadow="True">
                         <Label Text="{Binding Nombre}"
                                FontSize="Medium"
-                               TextColor="#3F51B5" />
+                               TextColor="#FCFCFC" />
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

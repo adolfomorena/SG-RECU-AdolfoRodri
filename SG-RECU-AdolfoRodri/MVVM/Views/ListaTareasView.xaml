@@ -31,7 +31,7 @@
                                 Text="EDITAR" TextColor="White"
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                                 BackgroundColor="Pink"
-                                Command="{Binding EditarTareaCommand}">
+                                Command="{Binding Source= {x:RelativeSource AncestorType= {x:Type local:ListaTareasViewModel}}, Path= EditarTareaCommand}">
                         </Button>
                     </Grid>
                 </DataTemplate>

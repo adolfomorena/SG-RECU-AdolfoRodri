@@ -57,7 +57,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 EliminarEtiqueta();
             }, canExecute: () =>
             {
-                return EtiquetaSeleccionada != null;
+                return EtiquetaSeleccionada.Id != 0;
             });
         }
         public void GetEtiquetas()

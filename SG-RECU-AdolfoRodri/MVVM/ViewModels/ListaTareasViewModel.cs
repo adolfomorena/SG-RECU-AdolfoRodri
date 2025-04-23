@@ -1,6 +1,8 @@
-﻿using PropertyChanged;
+using PropertyChanged;
 using SG_RECU_AdolfoRodri.MVVM.Models;
 using SG_RECU_AdolfoRodri.MVVM.Views;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Threading.Tasks;
@@ -14,18 +16,9 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public Tarea TareaSeleccionada { get; set; } = new Tarea();
         public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
 
-        public ICommand EditarTareaCommand => new Command(() =>
-        {
-            App.Current.MainPage.Navigation.PushAsync(
-                new GestionTareasView
-                {
-                    BindingContext = new GestionTareasViewModel
-                    {
-                        TareaSeleccionada = this.TareaSeleccionada
-                    }
-                }
-            );
-        });
+        public ICommand CambiarEstadoCommand { get; private set; }
+        public ICommand EditarTareaCommand { get; private set; }
+        public ICommand CrearTareaCommand { get; private set; }
 
         public ICommand AgregarTareaCommand => new Command(() =>
         {
@@ -49,7 +42,10 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         public ListaTareasViewModel()
         {
-            Tareas = new ObservableCollection<Tarea>(App.TareaRepo.GetItems());
+            CambiarEstadoCommand = new Command<Tarea>(CambiarEstado);
+            EditarTareaCommand = new Command(EditarTarea);
+            CrearTareaCommand = new Command(CrearTarea);
+            RefreshView();
         }
 
         async public void CambiarEstado()
@@ -71,17 +67,27 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             }
         }
 
-        async public void RefreshView()
+        private void EditarTarea()
         {
-            Tareas.Clear();
-            var tareas = App.TareaRepo.GetItemsCascada();
-            foreach (var tarea in tareas)
+            if (TareaSeleccionada != null)
             {
-                Tareas.Add(tarea);
+                App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+                {
+                    BindingContext = new GestionTareasViewModel(TareaSeleccionada)
+                });
             }
+            
         }
 
-        async public void BorrarTarea()
+        private void CrearTarea()
+        {
+            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+            {
+                BindingContext = new GestionTareasViewModel()
+            });
+        }
+
+        private void RefreshView()
         {
             if (TareaSeleccionada != null)
             {

@@ -1,4 +1,4 @@
-﻿using PropertyChanged;
+using PropertyChanged;
 using SG_RECU_AdolfoRodri.MVVM.Models;
 using SG_RECU_AdolfoRodri.MVVM.Views;
 using System;
@@ -11,129 +11,60 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
-{
-
-    [AddINotifyPropertyChangedInterface]
+{ 
     public class GestionTareasViewModel
     {
-
-        public Tarea TareaSeleccionada { get; set; } = new Tarea();
-        public ObservableCollection<Tarea> Tareas { get; set; } = new ObservableCollection<Tarea>();
+        public Tarea TareaSeleccionada { get; set; }
         public List<Etiqueta> Etiquetas { get; set; } = new List<Etiqueta>();
+        public ObservableCollection<Etiqueta> EtiquetasDisponibles { get; set; } = new ObservableCollection<Etiqueta>();
 
-        public ObservableCollection<ItemEtiqueta> ItemsEtiqueta { get; set; } = new ObservableCollection<ItemEtiqueta>();
+        public ICommand VolverCommand { get; private set; }
+        public ICommand GuardarCommand { get; private set; }
+        public ICommand GestionEtiquetasCommand { get; private set; }
 
-        public ICommand NavegarEtiquetasCommand => new Command(() =>
+        public GestionTareasViewModel(Tarea tarea)
         {
-            NavegarEtiquetas();
-        });
-        public ICommand VolverCommand => new Command(() =>
-        {
-            Volver();
-        });
-        public Collection<string> Prioridades { get; set; } = new Collection<string>
-        {
-            "ALTA",
-            "MEDIA",
-            "BAJA"
-        };
-        public string Prioridad { get; set; }
-
-
-
-
-
-        private Command _guardarTarea;
-
-        public ICommand GuardarTareaCommand => _guardarTarea;
+            RefreshView();
+            TareaSeleccionada = tarea;
+            VolverCommand = new Command(Volver);
+            GuardarCommand = new Command(Guardar);
+            GestionEtiquetasCommand = new Command(GestionEtiquetas);
+        }
         public GestionTareasViewModel()
         {
-            GetEtiquetas();
-            GetTareas();
-            _guardarTarea = new Command(execute: () =>
-            {
-                GuardarTarea();
-            }, canExecute: () =>
-            {
-                return TareaSeleccionada.Titulo != string.Empty && TareaSeleccionada.Prioridad != string.Empty;
-            });
+            RefreshView();
+            TareaSeleccionada = new Tarea();
+            VolverCommand = new Command(Volver);
+            GuardarCommand = new Command(Guardar);
+            GestionEtiquetasCommand = new Command(GestionEtiquetas);
         }
         
 
-        async public void GuardarTarea()
+        private void Volver()
         {
-            Tarea existe = App.TareaRepo.GetItem(t => t.Id == TareaSeleccionada.Id);
+            App.Current.MainPage.Navigation.PopAsync();
+        }
 
+        // can execute y guardar bien las etiquetas
+        private void Guardar()
+        {
+            App.TareaRepo.SaveItemCascada(TareaSeleccionada);
+            App.Current.MainPage.DisplayAlert("Creada", "Etiqueta creada correctamente", "Ok");
 
-
-            if (existe == null)
+            App.Current.MainPage.Navigation.PopAsync();
+        }
+        private void GestionEtiquetas()
+        {
+            App.Current.MainPage.Navigation.PushAsync(new GestionEtiquetasView
             {
-                Tarea nuevaTarea = new Tarea
-                {
-                    Titulo = TareaSeleccionada.Titulo,
-                    Prioridad = TareaSeleccionada.Prioridad,
-                    Etiquetas = new ObservableCollection<Etiqueta>()
-                };
-                foreach (var item in ItemsEtiqueta.Where(x => x.Seleccionado))
-                {
-                    Etiqueta etiquetaExistente = App.EtiquetaRepo.GetItem(e => e.Nombre == item.Etiqueta.Nombre);
-                    nuevaTarea.Etiquetas.Add(etiquetaExistente);
-                }
-                App.TareaRepo.SaveItemCascada(nuevaTarea);
+                BindingContext = new GestionEtiquetasViewModel()
+            });
+        }
 
-                await Application.Current.MainPage.DisplayAlert("Guardado", "Tarjeta guardada", "OK");
-            }
-            else
-            {
-                existe.Prioridad = TareaSeleccionada.Prioridad;
-                existe.Etiquetas = new ObservableCollection<Etiqueta>();
-                foreach (var item in ItemsEtiqueta.Where(x => x.Seleccionado))
-                {
-                    Etiqueta etiquetaExistente = App.EtiquetaRepo.GetItem(e => e.Nombre == item.Etiqueta.Nombre);
-                    existe.Etiquetas.Add(etiquetaExistente);
-                }
-
-                App.TareaRepo.SaveItemCascada(existe);
-                await Application.Current.MainPage.DisplayAlert("Actualizada", "Tarea actualizada correctamente", "OK");
-
-            }
-            TareaSeleccionada = new Tarea();
-            foreach (var item in ItemsEtiqueta) item.Seleccionado = false;
-        }
-             public void NavegarEtiquetas()
+        private void RefreshView()
         {
-            App.Current.MainPage.Navigation.PushAsync(new GestionEtiquetasView());
-
-        }
-        void Volver()
-        {
-            App.Current.MainPage.Navigation.PushAsync(new ListaTareasView());
-
-        }
-        public void GetEtiquetas()
-        {
-            Etiquetas.Clear();
-            ItemsEtiqueta.Clear();
-            var etiquetas = App.EtiquetaRepo.GetItems();
-            foreach (var etiqueta in etiquetas)
-            {
-                Etiquetas.Add(etiqueta);
-                ItemsEtiqueta.Add(new ItemEtiqueta { Etiqueta = etiqueta, Seleccionado = false });
-            }
-        }
-        public void GetTareas()
-        {
-            Tareas.Clear();
-            var tareas = App.TareaRepo.GetItems();
-            foreach (var tarea in tareas)
-            {
-                Tareas.Add(tarea);
-            }
-        }
-        public void NotificarCanExecute()
-        {
-            _guardarTarea.ChangeCanExecute();
-        }
+            EtiquetasDisponibles = new ObservableCollection<Etiqueta>(App.EtiquetaRepo.GetItems());
         }
     }
+}
 

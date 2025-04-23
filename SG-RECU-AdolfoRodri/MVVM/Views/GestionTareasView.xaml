@@ -49,8 +49,8 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <HorizontalStackLayout Padding="5">
-                                <!--<CheckBox IsChecked="{Binding EtiquetaSelecionada}"/>-->
+                            <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+                                <CheckBox IsChecked="{Binding EtiquetaSelecionada}"/>
                                 <Label Text="{Binding Nombre}" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </DataTemplate>
@@ -60,9 +60,18 @@
         </ScrollView>
         <HorizontalStackLayout Grid.Row="1" Spacing="200" Margin="0,10"
                                HorizontalOptions="Center" VerticalOptions="End">
-            <Button Text="Volver" WidthRequest="200" HeightRequest="80" FontAttributes="Bold" FontSize="18"/>
-            <Button Text="Guardar" WidthRequest="200" FontAttributes="Bold" FontSize="18"/>
-            <Button Text="Etiquetas" WidthRequest="200" FontAttributes="Bold" FontSize="18"/>
+            <Button Text="Volver" 
+                    WidthRequest="200" HeightRequest="80" 
+                    FontAttributes="Bold" FontSize="18"
+                    Command="{Binding VolverCommand}"/>
+            <Button Text="Guardar" 
+                    WidthRequest="200" HeightRequest="80"
+                    FontAttributes="Bold" FontSize="18"
+                    Command="{Binding GuardarCommand}"/>    
+            <Button Text="Etiquetas" 
+                    WidthRequest="200" HeightRequest="80"
+                    FontAttributes="Bold" FontSize="18"
+                    Command="{Binding GestionEtiquetasCommand}"/>
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

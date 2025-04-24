@@ -1,0 +1,89 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SG_RECU_AdolfoRodri.MVVM.Views.GestionTareasView"
+             xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
+             xmlns:local="clr-namespace:SG_RECU_AdolfoRodri.MVVM.ViewModels"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#121212">
+    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:BoolToStringConverter x:Key="conversorSwitch" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView Margin="35">
+            <VerticalStackLayout Spacing="30" HorizontalOptions="Center" WidthRequest="800">
+                <Entry Placeholder="Título..."
+                       Text="{Binding txtTitulo}"
+                       TextChanged="Entry_TextChanged"
+                       Style="{StaticResource EntradaTexto}"
+                       HorizontalOptions="FillAndExpand"/>
+
+                <Editor Placeholder="Descripción..."
+                        Text="{Binding txtDescripcion}"
+                        TextChanged="Entry_TextChanged"
+                        AutoSize="TextChanges"
+                        HeightRequest="100"
+                        Style="{StaticResource EditorDescripcionGesTarea}"/>
+
+                
+                <Picker Title="Prioridad"
+                        TitleColor="White"
+                        SelectedItem="{Binding txtPrioridad}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"
+                        Style="{StaticResource PickerPrioridadGestTarea}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Alta</x:String>
+                            <x:String>Media</x:String>
+                            <x:String>Baja</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                    <Label Text="Completada" VerticalOptions="Center" Style="{StaticResource EtiquetaGeneral}" TextColor="White"/>
+                    <Switch IsToggled="{Binding TareaSeleccionada.Estado}" ThumbColor="White" OnColor="#388E3C"/>
+                </HorizontalStackLayout>
+
+                <Label Text="Etiquetas" Style="{StaticResource TituloGeneralGestTarea}" HorizontalOptions="Center" TextColor="White"/>
+                
+
+                <CollectionView ItemsSource="{Binding EtiquetasDisponibles}"
+                                SelectionMode="None"
+                                HeightRequest="200"
+                                HorizontalOptions="Center">
+                    <CollectionView.EmptyView>
+                        <Label Text="No hay etiquetas disponibles" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource EtiquetaGeneral}" TextColor="White"/>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+                                <CheckBox IsChecked="{Binding Seleccionado}"/>
+                                <Label Text="{Binding Etiqueta.Nombre}" VerticalOptions="Center" Style="{StaticResource EtiquetaGeneral}" TextColor="White"/>
+                               
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <HorizontalStackLayout Grid.Row="1" Spacing="200" Margin="0,10"
+                               HorizontalOptions="Center" VerticalOptions="End">
+            <Button Text="⬅ Volver"
+                    Style="{StaticResource BotonPrincipalGestTarea}"
+                    Command="{Binding VolverCommand}"/>
+            <Button Text="💾 Guardar"
+                    Style="{StaticResource BotonPrincipalGestTarea}"
+                    Command="{Binding GuardarCommand}"/>
+            <Button Text="Etiquetas"
+                    Style="{StaticResource BotonPrincipalGestTarea}"
+                    Command="{Binding GestionEtiquetasCommand}"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

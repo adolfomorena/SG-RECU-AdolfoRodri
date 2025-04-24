@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.GestionTareasView"
              xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
-             xmlns:local="clr-namespace:SG_RECU_AdolfoRodri.MVVM.ViewModels">
+             xmlns:local="clr-namespace:SG_RECU_AdolfoRodri.MVVM.ViewModels"
+             NavigationPage.HasNavigationBar="False">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:BoolToStringConverter x:Key="conversorSwitch" />
@@ -11,7 +13,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto">
-        <ScrollView>
+        <ScrollView Margin="35">
             <VerticalStackLayout Spacing="30" HorizontalOptions="Center" WidthRequest="800">
                 <Entry Placeholder="Título..."
                        Text="{Binding TareaSeleccionada.Titulo}"
@@ -51,7 +53,7 @@
                         <DataTemplate>
                             <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
                                 <CheckBox IsChecked="{Binding EtiquetaSelecionada}"/>
-                                <Label Text="{Binding Nombre}" VerticalOptions="Center"/>
+                                <Label Text="{Binding Etiqueta.Nombre}" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

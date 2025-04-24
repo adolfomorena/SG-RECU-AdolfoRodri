@@ -1,4 +1,9 @@
+<<<<<<< HEAD
     <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+=======
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+>>>>>>> origin/develop
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.ListaTareasView"
              xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
@@ -18,7 +23,16 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10" ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto" BackgroundColor="#303030" Margin="0,5">
+<<<<<<< HEAD
                      
+=======
+                        <Button Text="✅"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=CambiarEstadoCommand}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="DarkOliveGreen" FontSize="12"
+                                WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"/>
+
+>>>>>>> origin/develop
                         <HorizontalStackLayout Grid.Column="1" Padding="10" Spacing="20">
                             <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold" TextColor="White"/>
                             <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13" TextColor="White"/>
@@ -48,15 +62,14 @@
                                 WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                                 BackgroundColor="Pink"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EditarTareaCommand}"
-                         
+                                CommandParameter="{Binding .}"
                                 />
                         <Button Grid.Column="3"
                         Text="Borrar" TextColor="White"
                         WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                         BackgroundColor="Red"
                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BorrarTareaCommand}"
-                        />
-
+                        CommandParameter="{Binding .}"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -64,14 +77,8 @@
         <Button Text="+"
                 WidthRequest="60" HeightRequest="60" CornerRadius="30"
                 BackgroundColor="DarkOrange" TextColor="White"
-                HorizontalOptions="End" VerticalOptions="End"
+                HorizontalOptions="Center" VerticalOptions="End"
                 Margin="20"
-                Command="{Binding AgregarTareaCommand}"/>
-        <Button Text="Actualizar"
-            WidthRequest="60" HeightRequest="60" CornerRadius="30"
-            BackgroundColor="DarkOrange" TextColor="White"
-            HorizontalOptions="Start" VerticalOptions="End"
-            Margin="20"
-            Command="{Binding RefreshCommand}"/>
+                Command="{Binding CrearTareaCommand}"/>
     </Grid>
 </ContentPage>

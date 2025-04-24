@@ -20,10 +20,6 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public ICommand EditarTareaCommand { get; private set; }
         public ICommand CrearTareaCommand { get; private set; }
 
-        public ICommand AgregarTareaCommand => new Command(() =>
-        {
-            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView());
-        });
 
       
 
@@ -67,7 +63,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                     BindingContext = new GestionTareasViewModel(TareaSeleccionada)
                 });
             }
-            
+
         }
 
         private void CrearTarea()
@@ -83,6 +79,16 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             Tareas.Clear();
             List<Tarea> tareasDesdeBD = App.TareaRepo.GetItems();
             foreach (var tarea in tareasDesdeBD)
+            {
+                Tareas.Add(tarea);
+            }
+            else
+            {
+                Tareas.Clear();
+            }
+
+            var tareas = App.TareaRepo.GetItemsCascada();
+            foreach (var tarea in tareas)
             {
                 Tareas.Add(tarea);
             }

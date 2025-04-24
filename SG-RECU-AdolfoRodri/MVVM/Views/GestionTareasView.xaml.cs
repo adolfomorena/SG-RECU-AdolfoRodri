@@ -1,4 +1,3 @@
-using PropertyChanged;
 using SG_RECU_AdolfoRodri.MVVM.ViewModels;
 
 namespace SG_RECU_AdolfoRodri.MVVM.Views;

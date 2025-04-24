@@ -10,5 +10,6 @@ namespace SG_RECU_AdolfoRodri.MVVM.Models
     {
         public Etiqueta Etiqueta { get; set; }
         public bool Seleccionado { get; set; }
+
     }
 }

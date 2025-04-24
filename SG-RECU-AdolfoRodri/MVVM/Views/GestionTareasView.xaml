@@ -16,18 +16,18 @@
         <ScrollView Margin="35">
             <VerticalStackLayout Spacing="30" HorizontalOptions="Center" WidthRequest="800">
                 <Entry Placeholder="Título..."
-                       Text="{Binding TareaSeleccionada.Titulo}"
+                       Text="{Binding txtTitulo}"
                        TextChanged="Entry_TextChanged"
                        FontSize="18" HorizontalOptions="FillAndExpand"/>
                 
                 <Editor Placeholder="Descripción..."
-                        Text="{Binding TareaSeleccionada.Descripción}"
+                        Text="{Binding txtDescripcion}"
                         TextChanged="Entry_TextChanged"
                         AutoSize="TextChanges"
                         HeightRequest="100" FontSize="16"/>
 
                 <Picker Title="Prioridad" FontSize="16"
-                        SelectedItem="{Binding TareaSeleccionada.Prioridad}"
+                        SelectedItem="{Binding txtPrioridad}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">

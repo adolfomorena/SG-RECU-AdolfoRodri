@@ -14,4 +14,10 @@ public partial class GestionEtiquetasView : ContentPage
     {
         ((GestionEtiquetasViewModel)BindingContext).NotificarCambio();
     }
+
+    //deshabilitar el btn para volver atras
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
+    }
 }

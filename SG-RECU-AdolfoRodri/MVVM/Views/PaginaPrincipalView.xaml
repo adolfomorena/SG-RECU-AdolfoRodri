@@ -55,7 +55,7 @@
                         Text="Borrar" TextColor="White"
                         WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
                         BackgroundColor="Red"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BorrarTareaCommand}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=BorrarTareaCommand}"
                                 
                         />
                     </Grid>

@@ -21,7 +21,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             CambiarEstado();
         });
 
-
+        public ICommand BorrarTareaCommand { get; set; }
 
         public ICommand AgregarTareaCommand { get; private set; }
         public ICommand EditarTareaCommand => new Command(() =>
@@ -40,6 +40,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         public ObservableCollection<Tarea> Tareas { get; set; }
         public PaginaPrincipalViewModel() {
+            BorrarTareaCommand = new Command(BorrarTarea);
             AgregarTareaCommand = new Command(CrearTarea);
             Tareas = new ObservableCollection<Tarea>();
             CargarTareas();
@@ -80,6 +81,19 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         async public void CrearTarea()
         {
             App.Current.MainPage.Navigation.PushAsync(new GestionTareasView());
+        }
+        async public void BorrarTarea()
+        {
+            Tarea existe = App.TareaRepo.GetItem(t => t.Id.Equals(TareaSeleccionada.Id));
+            if (existe != null)
+            {
+                App.TareaRepo.DeleteItem(TareaSeleccionada);
+                await Application.Current.MainPage.DisplayAlert("Borrada", "Tarea borrada correctamente", "Ok");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Esta tarea ya no existe", "Ok");
+            }
         }
         async public void RefreshView()
         {

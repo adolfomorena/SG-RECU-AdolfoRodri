@@ -20,35 +20,16 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public ICommand EditarTareaCommand { get; private set; }
         public ICommand CrearTareaCommand { get; private set; }
 
-        public ICommand AgregarTareaCommand => new Command(() =>
-        {
-            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView());
-        });
-
-        public ICommand RefrescarCommand => new Command(() =>
-        {
-            RefreshView();
-        });
-
-        public ICommand BorrarTareaCommand => new Command(() =>
-        {
-            BorrarTarea();
-        });
-
-        public ICommand CambiarEstadoCommand => new Command(() =>
-        {
-            CambiarEstado();
-        });
 
         public ListaTareasViewModel()
         {
-            CambiarEstadoCommand = new Command<Tarea>(CambiarEstado);
+            RefreshView();
+            CambiarEstadoCommand = new Command(CambiarEstado);
             EditarTareaCommand = new Command(EditarTarea);
             CrearTareaCommand = new Command(CrearTarea);
-            RefreshView();
         }
 
-        async public void CambiarEstado()
+        private void CambiarEstado()
         {
             if (TareaSeleccionada != null)
             {
@@ -56,13 +37,13 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 {
                     TareaSeleccionada.Estado = true;
                     App.TareaRepo.SaveItemCascada(TareaSeleccionada);
-                    await Application.Current.MainPage.DisplayAlert("Completada", "Tarea completada", "Ok");
+                    App.Current.MainPage.DisplayAlert("Completada", "Tarea completada", "Ok");
                 }
                 else
                 {
                     TareaSeleccionada.Estado = false;
                     App.TareaRepo.SaveItemCascada(TareaSeleccionada);
-                    await Application.Current.MainPage.DisplayAlert("Pendiente", "Tarea marcada como pendiente", "Ok");
+                    App.Current.MainPage.DisplayAlert("Pendiente", "Tarea marcada como pendiente", "Ok");
                 }
             }
         }
@@ -89,12 +70,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private void RefreshView()
         {
-            if (TareaSeleccionada != null)
-            {
-                App.TareaRepo.DeleteItem(TareaSeleccionada);
-                await Application.Current.MainPage.DisplayAlert("Eliminada", "Tarea eliminada correctamente", "Ok");
-                RefreshView();
-            }
+            Tareas = new ObservableCollection<Tarea>(App.TareaRepo.GetItems());
         }
     }
 }

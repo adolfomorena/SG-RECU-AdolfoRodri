@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:SG_RECU_AdolfoRodri.MVVM.ViewModels"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#121212">
-    <!-- Fondo oscuro para toda la página -->
+    
 
     <ContentPage.Resources>
         <ResourceDictionary>

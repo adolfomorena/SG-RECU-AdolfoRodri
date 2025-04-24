@@ -15,8 +15,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
     public class GestionTareasViewModel
     {
         public Tarea TareaSeleccionada { get; set; }
-        public List<Etiqueta> Etiquetas { get; set; } = new List<Etiqueta>();
-        public ObservableCollection<Etiqueta> EtiquetasDisponibles { get; set; } = new ObservableCollection<Etiqueta>();
+        public ObservableCollection<ItemEtiqueta> EtiquetasDisponibles { get; set; } = new ObservableCollection<ItemEtiqueta>();
 
         public ICommand VolverCommand { get; private set; }
         public ICommand GuardarCommand { get; private set; }
@@ -24,34 +23,57 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         public GestionTareasViewModel(Tarea tarea)
         {
-            RefreshView();
             TareaSeleccionada = tarea;
             VolverCommand = new Command(Volver);
             GuardarCommand = new Command(Guardar);
             GestionEtiquetasCommand = new Command(GestionEtiquetas);
+            RefreshView();
         }
         public GestionTareasViewModel()
         {
-            RefreshView();
             TareaSeleccionada = new Tarea();
             VolverCommand = new Command(Volver);
             GuardarCommand = new Command(Guardar);
             GestionEtiquetasCommand = new Command(GestionEtiquetas);
+            RefreshView();
         }
-        
+
+        private void RefreshView()
+        {
+            var etiquetasDisponibles = App.EtiquetaRepo.GetItems();
+            EtiquetasDisponibles.Clear();
+
+            foreach (var etiqueta in  etiquetasDisponibles)
+            {
+                EtiquetasDisponibles.Add(new ItemEtiqueta
+                {
+                    Etiqueta = etiqueta,
+                    //Si es null, devuelve automáticamente null y evita lanzar una excepción.
+                    Seleccionado = TareaSeleccionada?.Etiquetas.Any(e => e.Id == etiqueta.Id) == true
+                });
+            }
+        }
 
         private void Volver()
         {
-            App.Current.MainPage.Navigation.PopAsync();
+            App.Current.MainPage.Navigation.PushAsync(new ListaTareasView());
         }
 
-        // can execute y guardar bien las etiquetas
         private void Guardar()
         {
-            App.TareaRepo.SaveItemCascada(TareaSeleccionada);
-            App.Current.MainPage.DisplayAlert("Creada", "Etiqueta creada correctamente", "Ok");
+            TareaSeleccionada.Etiquetas.Clear();
 
+            foreach ( var item in EtiquetasDisponibles)
+            {
+                if (item.Seleccionado)
+                {
+                    TareaSeleccionada.Etiquetas.Add(item.Etiqueta);
+                }
+            }
+            App.TareaRepo.SaveItemCascada(TareaSeleccionada);
+            App.Current.MainPage.DisplayAlert("Creada", "Etiqueta guardada correctamente", "Ok");
             App.Current.MainPage.Navigation.PopAsync();
+
         }
         private void GestionEtiquetas()
         {
@@ -59,11 +81,6 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             {
                 BindingContext = new GestionEtiquetasViewModel()
             });
-        }
-
-        private void RefreshView()
-        {
-            EtiquetasDisponibles = new ObservableCollection<Etiqueta>(App.EtiquetaRepo.GetItems());
         }
     }
 }

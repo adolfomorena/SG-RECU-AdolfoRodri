@@ -9,6 +9,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:BoolToStringConverter x:Key="EstadoConverter"/>
+            <conv:EtiquetasConverter x:Key="EtiquetasConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 

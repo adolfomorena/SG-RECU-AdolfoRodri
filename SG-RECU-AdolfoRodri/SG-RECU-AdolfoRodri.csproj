@@ -76,10 +76,10 @@
 	  <MauiXaml Update="MVVM\Views\GestionTareasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\ListaTareasView.xaml">
+	  <MauiXaml Update="MVVM\Views\PaginaPrincipalView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\PaginaPrincipalView.xaml">
+	  <MauiXaml Update="Resources\Styles\EstilosPaginas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

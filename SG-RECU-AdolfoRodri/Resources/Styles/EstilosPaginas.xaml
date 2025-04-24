@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SG_RECU_AdolfoRodri.Resources.Styles.EstilosPaginas">
+    <Style x:Key="BotonEstilo" TargetType="Button">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="140" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="FrameTareaEstilo" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="#1E1E1E" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="BorderColor" Value="#333333" />
+    </Style>
+
+    <Style x:Key="LabelPrioridadEstilo" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="#FFC107" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="BotonComun" TargetType="Button">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="45" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="BotonGuardar" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#4CAF50" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="45" />
+        <Setter Property="CornerRadius" Value="10" />
+    </Style>
+
+    <Style x:Key="BotonEliminar" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#F44336" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="45" />
+        <Setter Property="CornerRadius" Value="10" />
+    </Style>
+
+    <Style x:Key="EtiquetaComun" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="FrameTareaEstiloEtiqueta" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="#434343" />
+        <Setter Property="Padding" Value="15" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="HasShadow" Value="True" />
+    </Style>
+</ResourceDictionary>

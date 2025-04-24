@@ -71,7 +71,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         }
         void Volver()
         {
-            App.Current.MainPage.Navigation.PushAsync(new ListaTareasView());
+            App.Current.MainPage.Navigation.PopToRootAsync();
 
         }
         public void GetTareasEtiquetas()

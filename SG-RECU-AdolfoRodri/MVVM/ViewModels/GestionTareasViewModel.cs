@@ -56,7 +56,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private void Volver()
         {
-            App.Current.MainPage.Navigation.PushAsync(new ListaTareasView());
+            App.Current.MainPage.Navigation.PopAsync();
         }
 
         private void Guardar()

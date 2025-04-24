@@ -20,4 +20,10 @@ public partial class GestionTareasView : ContentPage
     {
         ((GestionTareasViewModel)BindingContext).NotificarCanExecute();
     }
+
+    //deshabilitar el btn para volver atras
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
+    }
 }

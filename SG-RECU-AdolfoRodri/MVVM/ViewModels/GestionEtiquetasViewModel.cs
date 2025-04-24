@@ -24,7 +24,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private Command _eliminarEtiqueta;
 
-       
+
         public ICommand GuardarEtiquetaCommand => _guardarEtiqueta;
 
         public ICommand EliminarEtiquetaCommand => _eliminarEtiqueta;
@@ -33,11 +33,12 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public ICommand VolverCommand => new Command(() =>
         {
             Volver();
-        }); 
+        });
 
 
 
-        public GestionEtiquetasViewModel(){
+        public GestionEtiquetasViewModel()
+        {
 
             ListaTareaEtiqueta.Clear();
             ListaEtiquetas.Clear();
@@ -87,38 +88,34 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         {
             App.EtiquetaRepo.SaveItem(EtiquetaSeleccionada);
             await Application.Current.MainPage.DisplayAlert("Creada", "Etiqueta creada correctamente", "Ok");
-           
+
             EtiquetaSeleccionada = new Etiqueta();
             GetEtiquetas();
         }
 
         async public void EliminarEtiqueta()
         {
-          
-            var tareas= from ta in ListaTareaEtiqueta
-                        where ta.EtiquetaId == EtiquetaSeleccionada.Id
-                        select ta;
+
+            var tareas = from ta in ListaTareaEtiqueta
+                         where ta.EtiquetaId == EtiquetaSeleccionada.Id
+                         select ta;
 
             if (tareas.Any())
             {
                 App.EtiquetaRepo.DeleteItem(EtiquetaSeleccionada);
-            }   
+            }
 
             App.EtiquetaRepo.DeleteItem(EtiquetaSeleccionada);
             await Application.Current.MainPage.DisplayAlert("Eliminada", "Etiqueta eliminada correctamente", "Ok");
             EtiquetaSeleccionada = new Etiqueta();
             GetEtiquetas();
-            
+
 
         }
         public void NotificarCambio()
         {
-            _guardarEtiqueta.ChangeCanExecute();  
+            _guardarEtiqueta.ChangeCanExecute();
             _eliminarEtiqueta.ChangeCanExecute();
         }
-
     }
-
-    
-
 }

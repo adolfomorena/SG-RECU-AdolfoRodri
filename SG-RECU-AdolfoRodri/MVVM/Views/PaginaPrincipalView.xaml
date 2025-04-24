@@ -95,13 +95,13 @@
                                                     HeightRequest="35" />
 
                                             <Button Text="BORRAR"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=BorrarTareaCommand}"
-                                BackgroundColor="#E53935"
-                                TextColor="White"
-                                FontSize="13"
-                                CornerRadius="12"
-                                WidthRequest="90"
-                                HeightRequest="35" />
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=BorrarTareaCommand}"
+                                                    BackgroundColor="#E53935"
+                                                    TextColor="White"
+                                                    FontSize="13"
+                                                    CornerRadius="12"
+                                                    WidthRequest="90"
+                                                    HeightRequest="35" />
                                         </HorizontalStackLayout>
 
                                     </VerticalStackLayout>

@@ -14,6 +14,11 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 { 
     public class GestionTareasViewModel
     {
+        public string txtTitulo { get; set; }
+        public string txtDescripcion { get; set; }
+        public string txtPrioridad { get; set; } 
+
+
         public Tarea TareaSeleccionada { get; set; }
         public ObservableCollection<ItemEtiqueta> EtiquetasDisponibles { get; set; } = new ObservableCollection<ItemEtiqueta>();
 
@@ -26,6 +31,10 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
         public GestionTareasViewModel(Tarea tarea)
         {
             TareaSeleccionada = tarea;
+            txtTitulo = tarea.Titulo;
+            txtDescripcion = tarea.Descripcion;
+            txtPrioridad = tarea.Prioridad;
+
             VolverCommand = new Command(Volver);
 
             _guardarCommand = new Command(execute: () =>
@@ -33,9 +42,9 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 Guardar();
             }, canExecute: () =>
             {
-                return !string.IsNullOrWhiteSpace(TareaSeleccionada.Titulo)
-                && !string.IsNullOrWhiteSpace(TareaSeleccionada.Descripcion)
-                && !string.IsNullOrWhiteSpace(TareaSeleccionada.Prioridad);
+                return !string.IsNullOrWhiteSpace(txtTitulo)
+                && !string.IsNullOrWhiteSpace(txtDescripcion)
+                && !string.IsNullOrWhiteSpace(txtPrioridad);
             });
 
             GestionEtiquetasCommand = new Command(GestionEtiquetas);
@@ -51,9 +60,9 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 Guardar();
             }, canExecute: () =>
             {
-                return !string.IsNullOrWhiteSpace(TareaSeleccionada.Titulo)
-                && !string.IsNullOrWhiteSpace(TareaSeleccionada.Descripcion)
-                && !string.IsNullOrWhiteSpace(TareaSeleccionada.Prioridad);
+                return !string.IsNullOrWhiteSpace(txtTitulo)
+                && !string.IsNullOrWhiteSpace(txtDescripcion)
+                && !string.IsNullOrWhiteSpace(txtPrioridad);
             });
             
             GestionEtiquetasCommand = new Command(GestionEtiquetas);
@@ -67,6 +76,10 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private void Guardar()
         {
+            TareaSeleccionada.Titulo = txtTitulo;
+            TareaSeleccionada.Descripcion = txtDescripcion;
+            TareaSeleccionada.Prioridad = txtPrioridad;
+
             if (TareaSeleccionada.Etiquetas == null)
             {
                 TareaSeleccionada.Etiquetas = new ObservableCollection<Etiqueta>();
@@ -85,8 +98,8 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             }
             App.TareaRepo.SaveItemCascada(TareaSeleccionada);
             App.Current.MainPage.DisplayAlert("Tarea guardada", "La tarea se ha guardada correctamente", "Ok");
-            App.Current.MainPage.Navigation.PopAsync();
 
+            App.Current.MainPage.Navigation.PopAsync();
         }
         private void GestionEtiquetas()
         {

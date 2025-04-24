@@ -64,4 +64,53 @@
         <Setter Property="CornerRadius" Value="15" />
         <Setter Property="HasShadow" Value="True" />
     </Style>
+    
+       <Style x:Key="EntradaTexto" TargetType="Entry">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#2F3A2B"/>
+        
+    </Style>
+
+    <!-- Estilo de Editor (para descripción) -->
+    <Style x:Key="EditorDescripcionGesTarea" TargetType="Editor">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#2F3A2B"/>
+       
+    </Style>
+
+    <!-- Estilo de Picker (Prioridad) -->
+    <Style x:Key="PickerPrioridadGestTarea" TargetType="Picker">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#2F3A2B"/>
+       
+    </Style>
+
+    <!-- Estilo de Etiquetas Generales -->
+    <Style x:Key="EtiquetaGeneralGestTarea" TargetType="Label">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Estilo de Título General -->
+    <Style x:Key="TituloGeneralGestTarea" TargetType="Label">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Estilo de Botones Principales -->
+    <Style x:Key="BotonPrincipalGestTarea" TargetType="Button">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#388E3C"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="HeightRequest" Value="80"/>
+        <Setter Property="WidthRequest" Value="200"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
 </ResourceDictionary>

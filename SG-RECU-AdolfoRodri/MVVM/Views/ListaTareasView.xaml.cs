@@ -6,7 +6,7 @@ public partial class ListaTareasView : ContentPage
 {
 	public ListaTareasView()
 	{
-		InitializeComponent();
+        InitializeComponent();
         BindingContext = new ListaTareasViewModel();
     }
 

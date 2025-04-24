@@ -10,7 +10,9 @@ namespace SG_RECU_AdolfoRodri
         public static BaseRepository<Etiqueta> EtiquetaRepo { get; private set; }
 
         public static BaseRepository<TareaEtiqueta> TareaEtiquetaRepo { get; private set; }
-        public App(BaseRepository<Tarea> objTareaRepo, BaseRepository<Etiqueta> objEtiquetaRepo, BaseRepository<TareaEtiqueta> objTareaEtiquetaRepo)
+        public App(BaseRepository<Tarea> objTareaRepo, 
+            BaseRepository<Etiqueta> objEtiquetaRepo,
+            BaseRepository<TareaEtiqueta> objTareaEtiquetaRepo)
         {
 
 
@@ -20,7 +22,7 @@ namespace SG_RECU_AdolfoRodri
 
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ListaTareasView());
+            MainPage = new NavigationPage(new PaginaPrincipalView());
         }
     }
 }

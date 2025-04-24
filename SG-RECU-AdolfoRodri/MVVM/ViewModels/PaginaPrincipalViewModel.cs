@@ -81,7 +81,8 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", "Esta tarea ya no existe", "Ok");
             }
         }
-        async public void RefreshView()
+
+        private void EditarTarea()
         {
             App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
             {

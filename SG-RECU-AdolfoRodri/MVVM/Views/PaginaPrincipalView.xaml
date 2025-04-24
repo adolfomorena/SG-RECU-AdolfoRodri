@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
+             xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.PaginaPrincipalView"
              xmlns:local="clr-namespace:SG_RECU_AdolfoRodri.MVVM.ViewModels"
              NavigationPage.HasNavigationBar="False">
@@ -9,71 +9,49 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:BoolToStringConverter x:Key="EstadoConverter"/>
+            <conv:EtiquetasConverter x:Key="EtiquetasConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Tareas}" SelectionMode="Single" SelectedItem="{Binding TareaSeleccionada}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10" ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto" BackgroundColor="#303030" Margin="0,5">
+                            <HorizontalStackLayout>
+                                <Button Text="✅"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=CambiarEstadoCommand}"
+                                        BackgroundColor="DarkOliveGreen" FontSize="12"
+                                        WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"/>
+                                <Label Text="{Binding Titulo}"/>
+                                <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13"/>
+                                <Label Text="{Binding Estado, Converter={StaticResource EstadoConverter}}" FontSize="13"/>
+                                <Label Text="Etiquetas"/>
+                                <Label Text="{Binding Etiquetas, Converter={StaticResource EtiquetasConverter}}"/>
+                            </HorizontalStackLayout>
+                            <Button Grid.Column="2"
+                                    Text="EDITAR" TextColor="White"
+                                    WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
+                                    BackgroundColor="Pink"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=EditarTareaCommand}"/>
+                            
+                            <Button Grid.Column="3"
+                                    Text="Borrar" TextColor="White"
+                                    WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BorrarTareaCommand}"/>  
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
 
-        <CollectionView ItemsSource="{Binding Tareas}" SelectionMode="Single" SelectedItem="{Binding TareaSeleccionada}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto" BackgroundColor="#303030" Margin="0,5">
-                        <HorizontalStackLayout>
-                            <Button Text="✅"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=CambiarEstadoCommand}"
-                            BackgroundColor="DarkOliveGreen" FontSize="12"
-                            WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"/>
-                            <Label Text="{Binding Titulo}"/>
-                        <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13"/>
-                        <Label Text="{Binding Estado, Converter={StaticResource EstadoConverter}}" FontSize="13"/>
-                        <CollectionView ItemsSource="{Binding Etiquetas}" Margin="0,5,0,0">
-                            <CollectionView.EmptyView>
-                                <Grid>
-                                    <VerticalStackLayout>
-                                        <Label HorizontalTextAlignment="Center" Text="No hay etiquetas"  FontAttributes="Bold"/>
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </CollectionView.EmptyView>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding Nombre}"/>
-                                        <Label Text=", "/>
-                                    </HorizontalStackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </HorizontalStackLayout>
-                        <Button Grid.Column="2"
-            Text="EDITAR" TextColor="White"
-            WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
-            BackgroundColor="Pink"
-            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EditarTareaCommand}"
-     
-            />
-                        <Button Grid.Column="3"
-                        Text="Borrar" TextColor="White"
-                        WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
-                        BackgroundColor="Red"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BorrarTareaCommand}"
-                                
-                        />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        
         <Button Text="+"
-        WidthRequest="60" HeightRequest="60" CornerRadius="30"
-        BackgroundColor="DarkOrange" TextColor="White"
-        HorizontalOptions="End" VerticalOptions="End"
-        Margin="20"
-        Command="{Binding AgregarTareaCommand}"/>
-    <Button Text="Actualizar"
-    WidthRequest="60" HeightRequest="60" CornerRadius="30"
-    BackgroundColor="DarkOrange" TextColor="White"
-    HorizontalOptions="Start" VerticalOptions="End"
-    Margin="20"
-    Command="{Binding RefreshCommand}"/>
+                WidthRequest="60" HeightRequest="60" CornerRadius="30"
+                BackgroundColor="DarkOrange" TextColor="White"
+                HorizontalOptions="End" VerticalOptions="End"
+                Margin="20"
+                Command="{Binding AgregarTareaCommand}"/>
     </Grid>
 </ContentPage>

@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.ListaTareasView"
              xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
@@ -18,11 +18,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10" ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto" BackgroundColor="#303030" Margin="0,5">
-                        <Button Text="✅"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ListaTareasViewModel}}, Path=CambiarEstadoCommand}"
-                                BackgroundColor="DarkOliveGreen" FontSize="12"
-                                WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"/>
-
+                     
                         <HorizontalStackLayout Grid.Column="1" Padding="10" Spacing="20">
                             <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold" TextColor="White"/>
                             <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13" TextColor="White"/>

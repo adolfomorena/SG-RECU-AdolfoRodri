@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
+             xmlns:conv="clr-namespace:SG_RECU_AdolfoRodri.Converters"
              x:Class="SG_RECU_AdolfoRodri.MVVM.Views.PaginaPrincipalView"
              xmlns:local="clr-namespace:SG_RECU_AdolfoRodri.MVVM.ViewModels"
              NavigationPage.HasNavigationBar="False">
@@ -11,69 +10,134 @@
             <conv:BoolToStringConverter x:Key="EstadoConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid>
 
-        <CollectionView ItemsSource="{Binding Tareas}" SelectionMode="Single" SelectedItem="{Binding TareaSeleccionada}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto" BackgroundColor="#303030" Margin="0,5">
-                        <HorizontalStackLayout>
-                            <Button Text="✅"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=CambiarEstadoCommand}"
-                            BackgroundColor="DarkOliveGreen" FontSize="12"
-                            WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"/>
-                            <Label Text="{Binding Titulo}"/>
-                        <Label Text="{Binding Descripcion, StringFormat='{}{0:20}'}" FontSize="13"/>
-                        <Label Text="{Binding Estado, Converter={StaticResource EstadoConverter}}" FontSize="13"/>
-                        <CollectionView ItemsSource="{Binding Etiquetas}" Margin="0,5,0,0">
-                            <CollectionView.EmptyView>
-                                <Grid>
-                                    <VerticalStackLayout>
-                                        <Label HorizontalTextAlignment="Center" Text="No hay etiquetas"  FontAttributes="Bold"/>
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </CollectionView.EmptyView>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
+    <Grid BackgroundColor="Black"
+          RowDefinitions="*,Auto">
 
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding Nombre}"/>
-                                        <Label Text=", "/>
-                                    </HorizontalStackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </HorizontalStackLayout>
-                        <Button Grid.Column="2"
-            Text="EDITAR" TextColor="White"
-            WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
-            BackgroundColor="Pink"
-            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EditarTareaCommand}"
-     
-            />
-                        <Button Grid.Column="3"
-                        Text="Borrar" TextColor="White"
-                        WidthRequest="80" HeightRequest="40" CornerRadius="10" VerticalOptions="Center"
-                        BackgroundColor="Red"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=BorrarTareaCommand}"
+        <!-- Contenido principal centrado -->
+        <ScrollView Grid.Row="0">
+            <StackLayout HorizontalOptions="Center" WidthRequest="700" Padding="20">
+
+                <CollectionView ItemsSource="{Binding Tareas}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding TareaSeleccionada}"
+                                BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="#1E1E1E"
+                                   Padding="20"
+                                   Margin="0,10"
+                                   CornerRadius="15"
+                                   HasShadow="True"
+                                   BorderColor="#333333">
+
                                 
-                        />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        
-        <Button Text="+"
-        WidthRequest="60" HeightRequest="60" CornerRadius="30"
-        BackgroundColor="DarkOrange" TextColor="White"
-        HorizontalOptions="End" VerticalOptions="End"
-        Margin="20"
-        Command="{Binding AgregarTareaCommand}"/>
-    <Button Text="Actualizar"
-    WidthRequest="60" HeightRequest="60" CornerRadius="30"
-    BackgroundColor="DarkOrange" TextColor="White"
-    HorizontalOptions="Start" VerticalOptions="End"
-    Margin="20"
-    Command="{Binding RefreshCommand}"/>
+                                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                                    <Label Text="{Binding Titulo}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="White"
+                                           HorizontalTextAlignment="Center" />
+
+                                    <Label Text="{Binding Descripcion}"
+                                           FontSize="14"
+                                           TextColor="#AAAAAA"
+                                           HorizontalTextAlignment="Center" />
+
+                                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                        <Label Text="Prioridad:"
+                                               FontSize="13"
+                                               TextColor="#BBBBBB" />
+                                        <Label Text="{Binding Prioridad}"
+                                               FontSize="13"
+                                               TextColor="#FFC107"
+                                               FontAttributes="Bold"/>
+                                    </HorizontalStackLayout>
+
+                                    <Button Text="{Binding Estado, Converter={StaticResource EstadoConverter}}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=CambiarEstadoCommand}"
+                                            BackgroundColor="Transparent"
+                                            TextColor="#81C784"
+                                            BorderColor="#81C784"
+                                            BorderWidth="2"
+                                            FontSize="13"
+                                            FontAttributes="Bold"
+                                            CornerRadius="15"
+                                            HeightRequest="40"
+                                            WidthRequest="140"
+                                            HorizontalOptions="Center" />
+
+                                    <Label Text="Etiquetas"
+                                           FontSize="13"
+                                           TextColor="White"
+                                           HorizontalTextAlignment="Center" />
+
+                                    <CollectionView ItemsSource="{Binding Etiquetas}"
+                                                    ItemsLayout="HorizontalList"
+                                                    SelectionMode="None"
+                                                    BackgroundColor="Transparent"
+                                                    HeightRequest="30"
+                                                    HorizontalOptions="Center">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Frame BackgroundColor="#3E3E3E"
+                                                       Padding="5,2"
+                                                       CornerRadius="10"
+                                                       Margin="2,0">
+                                                    <Label Text="{Binding Nombre}"
+                                                           FontSize="12"
+                                                           TextColor="NavajoWhite" />
+                                                </Frame>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+
+                                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0,10,0,0">
+                                        <Button Text="✏️ EDITAR"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EditarTareaCommand}"
+                                                BackgroundColor="#2196F3"
+                                                TextColor="White"
+                                                FontSize="13"
+                                                CornerRadius="12"
+                                                WidthRequest="90"
+                                                HeightRequest="35" />
+
+                                        <Button Text="🗑 BORRAR"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:PaginaPrincipalViewModel}}, Path=BorrarTareaCommand}"
+                                                BackgroundColor="#E53935"
+                                                TextColor="White"
+                                                FontSize="13"
+                                                CornerRadius="12"
+                                                WidthRequest="90"
+                                                HeightRequest="35" />
+                                    </HorizontalStackLayout>
+
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
+        </ScrollView>
+
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="40" Margin="0,20">
+            <Button Text="Actualizar"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    BackgroundColor="DarkOrange"
+                    TextColor="White"
+                    Command="{Binding RefreshCommand}" />
+
+            <Button Text="+"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    BackgroundColor="DarkOrange"
+                    TextColor="White"
+                    Command="{Binding AgregarTareaCommand}" />
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

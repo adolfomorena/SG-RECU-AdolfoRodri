@@ -17,15 +17,18 @@
             <VerticalStackLayout Spacing="30" HorizontalOptions="Center" WidthRequest="800">
                 <Entry Placeholder="Título..."
                        Text="{Binding TareaSeleccionada.Titulo}"
+                       TextChanged="Entry_TextChanged"
                        FontSize="18" HorizontalOptions="FillAndExpand"/>
                 
                 <Editor Placeholder="Descripción..."
                         Text="{Binding TareaSeleccionada.Descripción}"
+                        TextChanged="Entry_TextChanged"
                         AutoSize="TextChanges"
                         HeightRequest="100" FontSize="16"/>
 
                 <Picker Title="Prioridad" FontSize="16"
-                        SelectedItem="{Binding TareaSeleccionada.Prioridad}">
+                        SelectedItem="{Binding TareaSeleccionada.Prioridad}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Alta</x:String>
@@ -52,7 +55,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-                                <CheckBox IsChecked="{Binding EtiquetaSelecionada}"/>
+                                <CheckBox IsChecked="{Binding Seleccionado}"/>
                                 <Label Text="{Binding Etiqueta.Nombre}" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </DataTemplate>

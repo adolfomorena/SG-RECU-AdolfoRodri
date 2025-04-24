@@ -13,49 +13,28 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
     public class PaginaPrincipalViewModel
-    
-   {
-
-        public ICommand CambiarEstadoCommand => new Command(() =>
-        {
-            CambiarEstado();
-        });
-
-
-
+    {
+        public ICommand CambiarEstadoCommand { get; private set; }
         public ICommand AgregarTareaCommand { get; private set; }
-        public ICommand EditarTareaCommand => new Command(() =>
-        {
-            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
-            {
-                BindingContext = new GestionTareasViewModel(TareaSeleccionada)
-            });
-        });
-        public ICommand RefreshCommand => new Command(() =>
-        {
-            RefreshView();
-        });
+        public ICommand EditarTareaCommand { get; private set; }
+        public bool IsRefreshing { get; set; }
+        public ICommand RefreshCommand { get; private set; }
 
         public Tarea TareaSeleccionada { get; set; } = new Tarea();
-
         public ObservableCollection<Tarea> Tareas { get; set; }
+
         public PaginaPrincipalViewModel() {
+            CambiarEstadoCommand = new Command(CambiarEstado);
             AgregarTareaCommand = new Command(CrearTarea);
+            EditarTareaCommand = new Command(EditarTarea);
+
+            RefreshCommand = new Command(Refrescar);
             Tareas = new ObservableCollection<Tarea>();
-            CargarTareas();
+            RefreshView();
         }
-        private void CargarTareas()
-        {
-            var tareas = App.TareaRepo.GetItemsCascada();
 
-            Tareas.Clear();
-
-            foreach (var tarea in tareas)
-            {
-                Tareas.Add(tarea);
-            }
-        }
-        async public void CambiarEstado()
+        
+        private void CambiarEstado()
         {
             if (TareaSeleccionada != null)
             {
@@ -63,25 +42,41 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                 {
                     TareaSeleccionada.Estado = true;
                     App.TareaRepo.SaveItemCascada(TareaSeleccionada);
-                    await Application.Current.MainPage.DisplayAlert("Completada", "Tarea completada", "Ok");
+                    App.Current.MainPage.DisplayAlert("Completada", "Tarea completada", "Ok");
                 }
                 else
                 {
                     TareaSeleccionada.Estado = false;
                     App.TareaRepo.SaveItemCascada(TareaSeleccionada);
-                    await Application.Current.MainPage.DisplayAlert("Pendiente", "Tarea marcada como pendiente", "Ok");
+                    App.Current.MainPage.DisplayAlert("Pendiente", "Tarea marcada como pendiente", "Ok");
                 }
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Pendiente", "No hay tarea seleccionada", "Ok");
+                App.Current.MainPage.DisplayAlert("Pendiente", "No hay tarea seleccionada", "Ok");
             }
         }
-        async public void CrearTarea()
+        private void CrearTarea()
         {
             App.Current.MainPage.Navigation.PushAsync(new GestionTareasView());
         }
-        async public void RefreshView()
+
+        private void EditarTarea()
+        {
+            App.Current.MainPage.Navigation.PushAsync(new GestionTareasView
+            {
+                BindingContext = new GestionTareasViewModel(TareaSeleccionada)
+            });
+        }
+
+        private void Refrescar()
+        {
+            IsRefreshing = true;
+            RefreshView();
+            IsRefreshing = false;
+        }
+
+        private void RefreshView()
         {
             var tareas = App.TareaRepo.GetItemsCascada();
 
@@ -93,5 +88,4 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
             }
         }
     }
-
 }

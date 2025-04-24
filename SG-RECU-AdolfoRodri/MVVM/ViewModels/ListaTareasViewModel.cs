@@ -57,7 +57,7 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
                     BindingContext = new GestionTareasViewModel(TareaSeleccionada)
                 });
             }
-            
+
         }
 
         private void CrearTarea()
@@ -70,7 +70,20 @@ namespace SG_RECU_AdolfoRodri.MVVM.ViewModels
 
         private void RefreshView()
         {
-            Tareas = new ObservableCollection<Tarea>(App.TareaRepo.GetItems());
+            if (Tareas == null)
+            {
+                Tareas = new ObservableCollection<Tarea>();
+            }
+            else
+            {
+                Tareas.Clear();
+            }
+
+            var tareas = App.TareaRepo.GetItemsCascada();
+            foreach (var tarea in tareas)
+            {
+                Tareas.Add(tarea);
+            }
         }
     }
 }
